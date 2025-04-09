@@ -48,3 +48,5 @@ extra:
   recipe-maintainers:
     - kynan
     - scopatz
+    - conda-forge/perl-packagers
+  
