@@ -4,6 +4,9 @@ ls $PREFIX/lib
 echo include .. 
 ls $PREFIX/include
 
-perl Makefile.PL EXPATLIBPATH=$PREFIX/lib EXPATINCPATH=$PREFIX/include INSTALLDIRS=site
+export EXPATLIBPATH=$PREFIX/lib
+export EXPATINCPATH=$PREFIX/include INSTALLDIRS=site
+perl Makefile.PL
+echo ran makefile.pl
 make
 make install
