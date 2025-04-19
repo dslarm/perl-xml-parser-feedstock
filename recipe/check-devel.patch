@@ -15,7 +15,7 @@ Only in b: Makefile.PL~
 Only in a/inc/Devel: #CheckLib.pm#
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
-+++ b/inc/Devel/CheckLib.pm	2025-04-19 21:36:09
++++ b/inc/Devel/CheckLib.pm	2025-04-19 21:43:25
 @@ -220,6 +220,8 @@
      }
  
@@ -30,7 +30,7 @@ diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
          warn "# @sys_cmd\n" if $args{debug};
          my $rv = $args{debug} ? system(@sys_cmd) : _quiet_system(@sys_cmd);
 +
-+	$system_as_text =  join(", ", @sys_cmd);
++	my $system_as_text =  join(", ", @sys_cmd);
 +	`$system_as_text`;
          push @missing, $header if $rv != 0 || !-x $exefile;
          _cleanup_exe($exefile);
