@@ -15,7 +15,7 @@ Only in b: Makefile.PL~
 Only in a/inc/Devel: #CheckLib.pm#
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
-+++ b/inc/Devel/CheckLib.pm	2025-04-19 22:51:05
++++ b/inc/Devel/CheckLib.pm	2025-04-19 23:03:36
 @@ -220,6 +220,8 @@
      }
  
@@ -33,7 +33,7 @@ diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
          push @missing, $header if $rv != 0 || !-x $exefile;
          _cleanup_exe($exefile);
          unlink $ofile if -e $ofile;
-@@ -327,9 +330,15 @@
+@@ -327,9 +330,21 @@
          }
          warn "# @sys_cmd\n" if $args{debug};
          my $rv = $args{debug} ? system(@sys_cmd) : _quiet_system(@sys_cmd);
@@ -45,7 +45,13 @@ diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
          push @missing, $lib if $rv != 0 || !-x $exefile;
          my $absexefile = File::Spec->rel2abs($exefile);
          $absexefile = '"' . $absexefile . '"' if $absexefile =~ m/\s/;
++	$rv = system($absexefile);
++	print "rv of absexefile is .. $rv\n";
++	print "absexe command is \n";
 +	print `$absexefile 2>&1`;
++	print `$absexefile`;
++	print "\n";
++
          push @wrongresult, $lib if $rv == 0 && -x $exefile && system($absexefile) != 0;
          unlink $ofile if -e $ofile;
          _cleanup_exe($exefile);
