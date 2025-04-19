@@ -12,9 +12,10 @@ diff -ru a/Makefile.PL b/Makefile.PL
      )
    ) {
 Only in b: Makefile.PL~
+Only in a/inc/Devel: #CheckLib.pm#
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
-+++ b/inc/Devel/CheckLib.pm	2025-04-19 21:04:03
++++ b/inc/Devel/CheckLib.pm	2025-04-19 21:36:09
 @@ -220,6 +220,8 @@
      }
  
@@ -24,4 +25,14 @@ diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
      my @missing;
      my @wrongresult;
      my @use_headers;
+@@ -268,6 +270,9 @@
+         }
+         warn "# @sys_cmd\n" if $args{debug};
+         my $rv = $args{debug} ? system(@sys_cmd) : _quiet_system(@sys_cmd);
++
++	$system_as_text =  join(", ", @sys_cmd);
++	`$system_as_text`;
+         push @missing, $header if $rv != 0 || !-x $exefile;
+         _cleanup_exe($exefile);
+         unlink $ofile if -e $ofile;
 Only in b/inc/Devel: CheckLib.pm~
