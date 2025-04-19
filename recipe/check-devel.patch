@@ -1,3 +1,17 @@
+diff -ru a/Makefile.PL b/Makefile.PL
+--- a/Makefile.PL	2016-04-13 05:37:41
++++ b/Makefile.PL	2025-04-19 21:14:41
+@@ -32,7 +32,8 @@
+     check_lib(    # fill in what you prompted the user for here
+         lib     => [qw(expat)],
+         header  => ['expat.h'],
+-        incpath => $expat_incpath,
++		  incpath => $expat_incpath,
++		  debug => true,
+         ( $expat_libpath ? ( libpath => $expat_libpath ) : () ),
+     )
+   ) {
+Only in b: Makefile.PL~
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
 +++ b/inc/Devel/CheckLib.pm	2025-04-19 21:04:03
