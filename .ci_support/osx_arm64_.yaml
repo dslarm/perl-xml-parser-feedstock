@@ -22,7 +22,3 @@ perl:
 - 5.32.1
 target_platform:
 - osx-arm64
-
-CONDA_BUILD_SYSROOT:
-- /Users/david/conda/perl-xml-parser-feedstock/SDKs/MacOSX11.0.sdk
-
