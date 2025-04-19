@@ -1,11 +1,12 @@
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
-+++ b/inc/Devel/CheckLib.pm	2025-04-19 20:07:05
-@@ -220,6 +220,7 @@
++++ b/inc/Devel/CheckLib.pm	2025-04-19 20:50:30
+@@ -220,6 +220,8 @@
      }
  
      my ( $cc, $ld ) = _findcc();
-+    print( "Compiler is $cc\n" );
++    print( "Compiler is ....." );
++    print join(", ", @$cc)
      my @missing;
      my @wrongresult;
      my @use_headers;
