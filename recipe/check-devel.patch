@@ -15,7 +15,7 @@ Only in b: Makefile.PL~
 Only in a/inc/Devel: #CheckLib.pm#
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
-+++ b/inc/Devel/CheckLib.pm	2025-04-19 22:11:07
++++ b/inc/Devel/CheckLib.pm	2025-04-19 22:23:32
 @@ -220,6 +220,8 @@
      }
  
@@ -32,7 +32,7 @@ diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 +
 +	my $system_as_text =  join(", ", @sys_cmd);
 +	my $comp_out = `$system_as_text 2>&1`;
-+	print "compiler output is $comp_out\n";
++	print "\ncompiler output is $comp_out; rv is $rv\n";
          push @missing, $header if $rv != 0 || !-x $exefile;
          _cleanup_exe($exefile);
          unlink $ofile if -e $ofile;
