@@ -15,7 +15,7 @@ Only in b: Makefile.PL~
 Only in a/inc/Devel: #CheckLib.pm#
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
-+++ b/inc/Devel/CheckLib.pm	2025-04-19 22:26:41
++++ b/inc/Devel/CheckLib.pm	2025-04-19 22:39:30
 @@ -220,6 +220,8 @@
      }
  
@@ -25,17 +25,24 @@ diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
      my @missing;
      my @wrongresult;
      my @use_headers;
-@@ -268,6 +270,12 @@
+@@ -268,6 +270,7 @@
          }
          warn "# @sys_cmd\n" if $args{debug};
          my $rv = $args{debug} ? system(@sys_cmd) : _quiet_system(@sys_cmd);
 +
+         push @missing, $header if $rv != 0 || !-x $exefile;
+         _cleanup_exe($exefile);
+         unlink $ofile if -e $ofile;
+@@ -327,6 +330,11 @@
+         }
+         warn "# @sys_cmd\n" if $args{debug};
+         my $rv = $args{debug} ? system(@sys_cmd) : _quiet_system(@sys_cmd);
 +	my $system_as_text =  join(", ", @sys_cmd);
 +	my $comp_out = `$system_as_text 2>&1`;
 +	print "\ncompiler output is $comp_out; rv is $rv\n";
 +	$comp_out = `echo $exefile ; ls $exefile\n`;
 +	print $comp_out;
-         push @missing, $header if $rv != 0 || !-x $exefile;
-         _cleanup_exe($exefile);
-         unlink $ofile if -e $ofile;
+         push @missing, $lib if $rv != 0 || !-x $exefile;
+         my $absexefile = File::Spec->rel2abs($exefile);
+         $absexefile = '"' . $absexefile . '"' if $absexefile =~ m/\s/;
 Only in b/inc/Devel: CheckLib.pm~
