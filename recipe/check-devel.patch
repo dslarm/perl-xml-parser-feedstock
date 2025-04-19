@@ -1,58 +1,15 @@
-diff -ru a/Makefile.PL b/Makefile.PL
---- a/Makefile.PL	2016-04-13 05:37:41
-+++ b/Makefile.PL	2025-04-19 21:14:41
-@@ -32,7 +32,8 @@
-     check_lib(    # fill in what you prompted the user for here
-         lib     => [qw(expat)],
-         header  => ['expat.h'],
--        incpath => $expat_incpath,
-+		  incpath => $expat_incpath,
-+		  debug => true,
-         ( $expat_libpath ? ( libpath => $expat_libpath ) : () ),
-     )
-   ) {
-Only in b: Makefile.PL~
 Only in a/inc/Devel: #CheckLib.pm#
 diff -ru a/inc/Devel/CheckLib.pm b/inc/Devel/CheckLib.pm
 --- a/inc/Devel/CheckLib.pm	2016-04-13 05:38:16
-+++ b/inc/Devel/CheckLib.pm	2025-04-19 23:03:36
-@@ -220,6 +220,8 @@
-     }
- 
-     my ( $cc, $ld ) = _findcc();
-+    print( "Compiler is ....." );
-+    print join(", ", @$cc);
-     my @missing;
-     my @wrongresult;
-     my @use_headers;
-@@ -268,6 +270,7 @@
-         }
++++ b/inc/Devel/CheckLib.pm	2025-04-19 23:13:19
+@@ -328,9 +328,6 @@
          warn "# @sys_cmd\n" if $args{debug};
          my $rv = $args{debug} ? system(@sys_cmd) : _quiet_system(@sys_cmd);
-+
-         push @missing, $header if $rv != 0 || !-x $exefile;
-         _cleanup_exe($exefile);
-         unlink $ofile if -e $ofile;
-@@ -327,9 +330,21 @@
-         }
-         warn "# @sys_cmd\n" if $args{debug};
-         my $rv = $args{debug} ? system(@sys_cmd) : _quiet_system(@sys_cmd);
-+	my $system_as_text =  join(", ", @sys_cmd);
-+	my $comp_out = `$system_as_text 2>&1`;
-+	print "\ncompiler output is $comp_out; rv is $rv\n";
-+	$comp_out = `echo $exefile ; ls $exefile\n`;
-+	print $comp_out;
          push @missing, $lib if $rv != 0 || !-x $exefile;
-         my $absexefile = File::Spec->rel2abs($exefile);
-         $absexefile = '"' . $absexefile . '"' if $absexefile =~ m/\s/;
-+	$rv = system($absexefile);
-+	print "rv of absexefile is .. $rv\n";
-+	print "absexe command is \n";
-+	print `$absexefile 2>&1`;
-+	print `$absexefile`;
-+	print "\n";
-+
-         push @wrongresult, $lib if $rv == 0 && -x $exefile && system($absexefile) != 0;
+-        my $absexefile = File::Spec->rel2abs($exefile);
+-        $absexefile = '"' . $absexefile . '"' if $absexefile =~ m/\s/;
+-        push @wrongresult, $lib if $rv == 0 && -x $exefile && system($absexefile) != 0;
          unlink $ofile if -e $ofile;
          _cleanup_exe($exefile);
+     }
 Only in b/inc/Devel: CheckLib.pm~
